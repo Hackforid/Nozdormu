@@ -7,22 +7,24 @@ import com.smilehacker.nozdormu.rx.CallBack;
  */
 public class BasicStore {
 
-    public String get(String key, Cache cache) {
+    public <T> T get(String key, Cache cache) {
         return cache.get(key);
     }
 
-    public void put(String key, String val, Cache cache) {
+    public <T> void getAsync(String key, ExtendCache cache, CallBack callBack) {
+        cache.getAsync(key, callBack);
+    }
+
+    public <T> void put(String key, T val, Cache cache) {
         cache.put(key, val);
     }
 
-    public void put(String key, String val, long expired, Cache cache) {
-
+    public <T> void put(String key, T val, long expired, ExtendCache cache) {
+        cache.put(key, val, expired);
     }
 
-    public <T> void put(String key, T val, long expired, Cache cache, CallBack callBack) {
-        if (cache instanceof AsyncCache) {
-            AsyncCache asyncCache = (AsyncCache) cache;
-            asyncCache.putAsync(key, val, callBack);
-        }
+    public <T> void put(String key, T val, long expired, ExtendCache cache, CallBack callBack) {
+        cache.putAsync(key, val, expired, callBack);
     }
+
 }
